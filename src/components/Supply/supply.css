@@ -29,6 +29,10 @@
     font-size: 13px;
     line-height: 16px;
     opacity: 0.4;
+    max-width: 364px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .supply__str-item {

@@ -14,17 +14,19 @@ const Search = () => {
     }
 
     return (
-        <div className="search">
-            <button className={`search__filter ${isDropDownOpen ? 'search__filter_active' : ''}`} onClick={toggleDropDown}>
-                <span>По номеру</span>
-                <img src={isDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
-                {isDropDownOpen && <ModalMenu items={itemsArray} />}
-            </button>
-            <input className="search__input" placeholder="Поиск..." />
-            <button className="search__button">
-                <img src={searchImg} alt="search" />
-            </button>
-        </div>
+        <>
+            <div className="search">
+                <button className={`search__filter ${isDropDownOpen ? 'search__filter_active' : ''}`} onClick={toggleDropDown}>
+                    <span>По номеру</span>
+                    <img src={isDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                </button>
+                <input className="search__input" placeholder="Поиск..." />
+                <button className="search__button">
+                    <img src={searchImg} alt="search" />
+                </button>
+            </div>
+            {isDropDownOpen && <ModalMenu items={itemsArray} />}
+        </>
     );
 }
 

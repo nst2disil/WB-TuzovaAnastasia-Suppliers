@@ -23,9 +23,13 @@
     gap: 10px;
     padding: 8px;
     line-height: 20px;
+    border-radius: 10px;
 }
 
 .settings__actions__add:hover {
-    border-radius: 10px;
+    background: var(--gray);
+}
+
+.settings__actions__add_pressed {
     background: var(--gray);
 }

@@ -27,45 +27,51 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
     }
 
     return (
-        <tr className="supply">
-            {Object.entries(rowData).map(([key, val]) => (
-                <td key={key}>
-                    {typeof val === 'object' && !Array.isArray(val) ? (
-                        <div className="supply__obj-item">
-                            <div className="supply__obj-item__name">
-                                {val.name}
-                            </div>
-                            <div className="supply__obj-item__address">
-                                {val.address}
-                            </div>
-                        </div>
-                    ) : (
-                        typeof val === 'boolean' ? (
-                            <div className="supply__str-item_mini">
-                                {val ?
-                                    <div className="green">В пути</div>
-                                    :
-                                    <div className="red">Задерживается</div>
-                                }
+        <>
+            <tr className="supply">
+                {Object.entries(rowData).map(([key, val]) => (
+                    <td key={key}>
+                        {typeof val === 'object' && !Array.isArray(val) ? (
+                            <div className="supply__obj-item">
+                                <div className="supply__obj-item__name">
+                                    {val.name}
+                                </div>
+                                <div className="supply__obj-item__address">
+                                    {val.address}
+                                </div>
                             </div>
                         ) : (
-                            <div className="supply__str-item">
-                                {val}
-                                {typeof val === 'number' && ' шт.'}
-                            </div>
-                        ))}
+                            typeof val === 'boolean' ? (
+                                <div className="supply__str-item_mini">
+                                    {val ?
+                                        <div className="green">В пути</div>
+                                        :
+                                        <div className="red">Задерживается</div>
+                                    }
+                                </div>
+                            ) : (
+                                <div className="supply__str-item">
+                                    {val}
+                                    {typeof val === 'number' && ' шт.'}
+                                </div>
+                            ))}
+                    </td>
+                ))
+                }
+                <td>
+                    <button
+                        className={`supply__edit-btn ${isEditButtonPressed ? 'supply__edit-btn_pressed' : ''}`}
+                        onClick={ToggleEdit}
+                    >
+                        <img src={kebabImg} alt="kebab" />
+                    </button>
                 </td>
-            ))
-            }
-            <td>
-                <button className={`supply__edit-btn ${isEditButtonPressed ? 'supply__edit-btn_pressed' : ''}`} onClick={ToggleEdit}>
-                    <img src={kebabImg} alt="kebab" />
-                    {isEditButtonPressed && (
-                        <ModalMenu items={itemsArray} />
-                    )}
-                </button>
-            </td>
-        </tr>
+            </tr>
+            {
+                isEditButtonPressed && (
+                    <ModalMenu items={itemsArray} />
+                )}
+        </>
     );
 }
 
