@@ -1,0 +1,22 @@
+.headerNav {
+    display: inline-flex;
+    background-color: var(--gray);
+    gap: 2px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.headerNav li {
+    padding: 8px;
+    border-radius: 10px;
+    line-height: 20px;
+}
+
+.headerNav li:hover {
+    background: var(--gray);
+}
+
+.headerNav li:first-child {
+    color: var(--dark-gray);
+    background: var(--white);
+}

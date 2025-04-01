@@ -1,0 +1,38 @@
+@font-face {
+    font-family: "ALS Hauss VF Regular";
+    src: url("./fonts/ALSHauss-Regular.woff") format("woff");
+}
+
+:root {
+    --white: #FFFFFF;
+    --white-gray: #F0F0F3;
+    --black: #000000;
+    --dark-gray: #2D2C32;
+    --gray: #FFFFFF14;
+    --light-gray: #FFFFFF3D;
+    --green: #14532B;
+    --light-green: #85EF89;
+    --orange: #7C3D12;
+    --light-orange: #FDB172;
+
+
+
+    font-family: 'ALS Hauss VF Regular';
+}
+
+body {
+    cursor: url('./../public/cursor.svg'), auto;
+    background: var(--dark-gray);
+}
+
+.app {
+    max-width: 1366px;
+    margin: 0 auto;
+    color: var(--white);
+    display: flex;
+}
+
+.container {
+    padding: 24px; 
+    width: 100%;
+}

@@ -1,0 +1,21 @@
+.suppliesTable {
+    margin-top: 24px;
+    padding-bottom: 12px;
+    width: 100%;
+    border-spacing: 0px 4px;
+}
+
+.suppliesTable__header {
+    font-size: 13px;
+    line-height: 16px;
+    text-align: left;
+}
+
+.suppliesTable th {
+    padding: 8px 16px 8px 8px;
+    font-weight: 560;
+}
+
+.suppliesTable th div {
+    padding: 2px 4px 2px 0px;
+}
