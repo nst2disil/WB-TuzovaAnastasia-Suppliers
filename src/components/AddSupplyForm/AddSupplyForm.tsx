@@ -1,8 +1,35 @@
 import './addSupplyForm.css';
+import { FC, useState } from 'react';
 import calImg from './icon-cal.svg';
 import chevronDownImg from './../../icon-chevron-down.svg';
+import { DatePicker } from 'antd';
+import CityDropDown from '../CityDropDown/CityDropDown';
+import chevronTopImg from './../../icon-chevron-top.svg';
 
-const AddSupplyForm = () => {
+interface AddSupplyFormProps {
+    closeModal: () => void;
+}
+
+const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+    function toggleDropDown() {
+        setIsDropDownOpen(prevState => !prevState);
+    }
+
+    const toggleCalendar = () => {
+        setIsCalendarOpen(prevState => !prevState);
+    };
+
+    const handleDateChange = (_date: Date | null, dateString: string | string[]) => {
+        const dateStr = Array.isArray(dateString) ? dateString.join(', ') : dateString;
+        setSelectedDate(dateStr);
+        setIsCalendarOpen(false);
+    };
+
     return (
         <div className="AddSupplyForm">
             <div>
@@ -15,9 +42,27 @@ const AddSupplyForm = () => {
                         Дата поставки
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
-                        <img src={calImg} alt="cal" />
+                        <input
+                            type="text"
+                            value={selectedDate || ''}
+                            readOnly
+                            placeholder="__.__.____"
+                        />
+                        <img
+                            src={calImg}
+                            alt="cal"
+                            onClick={toggleCalendar}
+                        />
                     </div>
+                    {isCalendarOpen && (
+                        <div className="AddSupplyForm__data__calendar">
+                            <DatePicker
+                                onChange={handleDateChange}
+                                open={true}
+                                placeholder=""
+                            />
+                        </div>
+                    )}
                 </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
@@ -25,8 +70,11 @@ const AddSupplyForm = () => {
                     </span>
                     <div className="AddSupplyForm__data__input">
                         <input />
-                        <img src={chevronDownImg} alt="chevron" />
+                        <button onClick={toggleDropDown}>
+                            <img src={isDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                        </button>
                     </div>
+                    {isDropDownOpen && <CityDropDown />}
                 </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
@@ -69,7 +117,7 @@ const AddSupplyForm = () => {
                 <button className="AddSupplyForm__btns__create">
                     Создать
                 </button>
-                <button className="AddSupplyForm__btns__cancel">
+                <button className="AddSupplyForm__btns__cancel" onClick={closeModal}>
                     Отменить
                 </button>
             </div>

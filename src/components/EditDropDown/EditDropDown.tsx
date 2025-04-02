@@ -34,15 +34,15 @@ const EditDropDown: FC<EditDropDownProps> = ({ supplyData }) => {
     // }
 
     return (
-        <div className="editDropDown">
-            <div className="editDropDown__list">
-                <button className="editDropDown__list__edit-btn" onClick={() =>
+        <div className="dropDown">
+            <div className="dropDown__list">
+                <button className="dropDown__list__edit-btn" onClick={() =>
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-expect-error
                     dispatch(updateSupply(supplyData))}>
                     <span>Редактировать</span>
                 </button>
-                <button className="editDropDown__list__cancel-btn" onClick={() =>
+                <button className="dropDown__list__cancel-btn" onClick={() =>
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-expect-error
                     dispatch(cancelSupply(supplyData.id))}>

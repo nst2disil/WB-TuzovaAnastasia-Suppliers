@@ -1,23 +1,20 @@
-// import { useState } from 'react';
+import { FC } from 'react';
 import './modalWindow.css';
 import CloseImg from './icon-close.svg';
 import AddSupplyForm from '../AddSupplyForm/AddSupplyForm';
+interface ModalWindowProps {
+    closeModal: () => void;
+}
 
-const ModalWindow = () => {
-    // const [isCloseButtonPressed, setIsCloseButtonPressed] = useState(false);
-
-    // function toggleCloseButton() {
-    //     setIsCloseButtonPressed(prevState => !prevState);
-    // }
-
+const ModalWindow: FC<ModalWindowProps> = ({ closeModal }) => {
     return (
         <div className="overlay">
             <div className="ModalWindow">
-                <button className="ModalWindow__close">
+                <button className="ModalWindow__close" onClick={closeModal}>
                     <img src={CloseImg} alt="close" />
                 </button>
                 <div className="ModalWindow__content">
-                    <AddSupplyForm />
+                    <AddSupplyForm closeModal={closeModal} />
                 </div>
             </div>
         </div>

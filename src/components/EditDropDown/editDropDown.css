@@ -1,8 +1,6 @@
-.editDropDown {
+/* .editDropDown {
     padding-top: 4px;
     position: absolute;
-    /* top: 100%; */
-    /* left: 0; */
     min-width: 192px;
     z-index: 1000;
 }
@@ -34,4 +32,4 @@
 .editDropDown__list button:last-child:hover {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-}
+} */
