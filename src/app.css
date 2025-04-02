@@ -6,23 +6,26 @@
 :root {
     --white: #FFFFFF;
     --white-gray: #F0F0F3;
+    --shadow-gray: #E3E4EA;
     --black: #000000;
     --light-black: #00000030;
     --dark-gray: #2D2C32;
     --gray: #FFFFFF14;
     --light-gray: #FFFFFF3D;
+    --light2-gray:#767386;
     --green: #14532B;
     --light-green: #85EF89;
     --orange: #7C3D12;
     --light-orange: #FDB172;
-
+    --blue: #4649E5;
+    --overlay-black: #000000b2;
 
 
     font-family: 'ALS Hauss VF Regular';
 }
 
 body {
-    cursor: url('./../public/cursor.svg'), auto;
+    cursor: url('./cursor.svg'), auto;
     background: var(--dark-gray);
 }
 

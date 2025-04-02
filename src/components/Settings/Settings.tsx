@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './settings.css';
-import plusImg from './plus.svg';
+import plusImg from './icon-plus.svg';
 import Search from '../Search/Search';
-import ModalEditWindow from '../ModalEditWindow/ModalEditWindow';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 const Settings = () => {
     const [isAddButtonPressed, setIsEditButtonPressed] = useState(false);
@@ -22,7 +22,7 @@ const Settings = () => {
                     <img src={plusImg} alt="plus" />
                     <span>Добавить поставку</span>
                 </button>
-                {isAddButtonPressed && <ModalEditWindow />}
+                {isAddButtonPressed && <ModalWindow />}
                 <Search />
             </div>
         </div>

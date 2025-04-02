@@ -1,4 +1,4 @@
-.modalEditWindow {
+.ModalWindow {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,7 +11,7 @@
     box-shadow: 0px 0px 26px 0px var(--light-black);
 }
 
-.modalEditWindow__close {
+.ModalWindow__close {
     opacity: 0.25;
     padding: 10px;
     display: flex;
@@ -19,13 +19,6 @@
     justify-content: right;
 }
 
-.modalEditWindow__content {
-    padding: 48px 48px 32px 48px;
-}
-
-.modalEditWindow__content__title {
-    margin-top: 10px;
-    font-weight: 680;
-    font-size: 24px;
-    line-height: 32px;
+.ModalWindow__content {
+    padding: 0px 48px 32px 48px;
 }

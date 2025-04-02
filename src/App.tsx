@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './app.css';
 import './reset.css';
 import Logo from "./components/Logo/Logo";
@@ -6,48 +6,23 @@ import HeaderNav from './components/HeaderNav/HeaderNav';
 import Settings from './components/Settings/Settings';
 import SuppliesTable from './components/SuppliesTable/SuppliesTable';
 
+import { fetchSupplies } from './store/suppliesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 function App() {
-  const [rowsData, setrowsData] = useState([]);
+  const dispatch = useDispatch();
 
   const headers = ['Номер', 'Дата поставки', 'Город', 'Количество', 'Тип поставки', 'Склад', 'Статус'];
-  const endpoint = 'http://localhost:3000/supplies';
-
-  const endpoint2 = 'http://localhost:3000/supplies/154814';
 
   useEffect(() => {
-    const fetchRowsData = async () => {
-      try {
-        const response = await fetch(endpoint);
-        const result = await response.json();
-        setrowsData(result);
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-      }
-    };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    dispatch(fetchSupplies());
+  }, [dispatch]);
 
-    fetchRowsData();
-  }, []);
-
-  useEffect(() => {
-    const updateRowsData = async () => {
-      try {
-        const response = await fetch(endpoint2, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ status: false }),
-        });
-        const result = await response.json();
-        console.log(result)
-      } catch (error) {
-        console.error('Ошибка:', error);
-      }
-    };
-
-    updateRowsData();
-  }, []);
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const supplies = useSelector((state) => state.supplies.value);
 
 
   return (
@@ -56,10 +31,11 @@ function App() {
       <div className="container">
         <HeaderNav />
         <Settings />
-        <SuppliesTable headers={headers} rowsData={rowsData} />
+        <SuppliesTable headers={headers} rowsData={supplies} />
       </div>
     </div>
   )
 }
 
 export default App;
+

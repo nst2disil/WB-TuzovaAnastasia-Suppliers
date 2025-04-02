@@ -1,0 +1,63 @@
+.AddSupplyForm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.AddSupplyForm__title {
+    font-weight: 680;
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.AddSupplyForm__id {
+    margin-top: 10px;
+    line-height: 20px;
+    color: var(--light2-gray);
+}
+
+.AddSupplyForm__btns {
+    padding-bottom: 16px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.AddSupplyForm__btns button {
+    padding: 8px;
+    line-height: 20px;
+}
+
+.AddSupplyForm__btns__create {
+    background: var(--blue);
+    border-radius: 10px;
+}
+
+.AddSupplyForm__data {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.AddSupplyForm__data__input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.AddSupplyForm__data span {
+    opacity: 0.4;
+}
+
+.AddSupplyForm__data__title {
+    font-size: 13px;
+    line-height: 16px;
+    padding: 6px 6px 0px 6px;
+}
+
+.AddSupplyForm__data__input {
+    margin-top: 8px;
+    padding: 12px 12px 12px 16px;
+    background: var(--gray);
+    border-radius: 10px;
+    min-width: 400px;
+}

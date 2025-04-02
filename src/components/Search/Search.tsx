@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import './search.css';
-import chevronDownImg from './chevron-down.svg';
-import chevronTopImg from './chevron-top.svg';
-import searchImg from './search.svg';
-import ModalMenu from '../DropDownMenu/DropDownMenu';
+import chevronDownImg from './../../icon-chevron-down.svg';
+import chevronTopImg from './icon-chevron-top.svg';
+import searchImg from './icon-search.svg';
+import EditDropDown from '../EditDropDown/EditDropDown';
 
 const Search = () => {
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-    const itemsArray = ['По номеру', 'По городу', 'По типу поставки', 'По статусу'];
+    // const itemsArray = ['По номеру', 'По городу', 'По типу поставки', 'По статусу'];
 
     function toggleDropDown() {
         setIsDropDownOpen(prevState => !prevState);
@@ -25,7 +25,7 @@ const Search = () => {
                     <img src={searchImg} alt="search" />
                 </button>
             </div>
-            {isDropDownOpen && <ModalMenu items={itemsArray} />}
+            {isDropDownOpen && <EditDropDown />}
         </>
     );
 }

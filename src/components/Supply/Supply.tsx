@@ -1,7 +1,7 @@
 import { useState, FC } from 'react';
 import './supply.css';
-import kebabImg from './kebab.svg';
-import ModalMenu from '../DropDownMenu/DropDownMenu';
+import kebabImg from './icon-kebab.svg';
+import EditDropDown from '../EditDropDown/EditDropDown';
 
 interface SupplyProps {
     rowData: {
@@ -20,7 +20,6 @@ interface SupplyProps {
 
 const Supply: FC<SupplyProps> = ({ rowData }) => {
     const [isEditButtonPressed, setIsEditButtonPressed] = useState(false);
-    const itemsArray = ['Редактировать', 'Отменить поставку'];
 
     function ToggleEdit() {
         setIsEditButtonPressed(prevState => !prevState);
@@ -41,13 +40,11 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
                                 </div>
                             </div>
                         ) : (
-                            typeof val === 'boolean' ? (
+                            key === 'status' ? (
                                 <div className="supply__str-item_mini">
-                                    {val ?
-                                        <div className="green">В пути</div>
-                                        :
-                                        <div className="red">Задерживается</div>
-                                    }
+                                    <div className={val === 'В пути' ? 'green' : 'red'}>
+                                        {val}
+                                    </div>
                                 </div>
                             ) : (
                                 <div className="supply__str-item">
@@ -67,10 +64,9 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
                     </button>
                 </td>
             </tr>
-            {
-                isEditButtonPressed && (
-                    <ModalMenu items={itemsArray} />
-                )}
+            {isEditButtonPressed && (
+                <EditDropDown supplyId={rowData.id} />
+            )}
         </>
     );
 }
