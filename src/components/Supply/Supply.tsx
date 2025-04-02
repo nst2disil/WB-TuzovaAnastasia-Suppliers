@@ -14,7 +14,7 @@ interface SupplyProps {
             "name": string,
             "address": string
         },
-        "status": boolean
+        "status": string
     };
 }
 
@@ -42,8 +42,8 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
                         ) : (
                             key === 'status' ? (
                                 <div className="supply__str-item_mini">
-                                    <div className={val === 'В пути' ? 'green' : 'red'}>
-                                        {val}
+                                    <div className={val === 'in_way' ? 'green' : 'red'}>
+                                        {val === 'in_way' ? "В пути" : "Задерживается"}
                                     </div>
                                 </div>
                             ) : (
@@ -65,7 +65,7 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
                 </td>
             </tr>
             {isEditButtonPressed && (
-                <EditDropDown supplyId={rowData.id} />
+                <EditDropDown supplyData={rowData} />
             )}
         </>
     );

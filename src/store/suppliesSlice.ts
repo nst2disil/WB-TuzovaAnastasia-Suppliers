@@ -27,13 +27,34 @@ export const cancelSupply = createAsyncThunk(
 
 export const updateSupply = createAsyncThunk(
   'supplies/updateSupply',
-  async (supplyId) => {
-    const response = await fetch(`http://localhost:3000/supplies/${supplyId}`, {
+  async (supplyData) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const response = await fetch(`${endpoint}/${supplyData.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ status: false }),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      body: JSON.stringify({ ...supplyData }),
+    });
+    const data = await response.json();
+    return data;
+  },
+);
+
+export const createSupply = createAsyncThunk(
+  'supplies/createSupply',
+  async (supplyData) => {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      body: JSON.stringify({ ...supplyData }),
     });
     const data = await response.json();
     return data;
@@ -55,11 +76,7 @@ export const suppliesSlice = createSlice({
   initialState,
   reducers: {
     add: () => {
-    },
-    // delete: () => {
-    // },
-    // update: () => {
-    // },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -67,7 +84,22 @@ export const suppliesSlice = createSlice({
         state.value = action.payload;
       })
       .addCase(cancelSupply.fulfilled, (state, action) => {
-        state.value = action.payload;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        state.value = state.value.filter(supply => supply.id !== action.payload.id);
+      })
+      .addCase(updateSupply.fulfilled, (state, action) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        const index = state.value.findIndex((val) => val.id === action.payload.id);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        state.value[index] = { ...state.value[index], ...action.payload };
+      })
+      .addCase(createSupply.fulfilled, (state, action) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        state.value.push(action.payload);
       })
   }
 })
