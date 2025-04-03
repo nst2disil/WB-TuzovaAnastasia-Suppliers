@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import suppliesReducer from './suppliesSlice';
+import { suppliesReducer, supplyFormReducer } from './suppliesSlice';
 
 export const store = configureStore({
     reducer: {
         supplies: suppliesReducer,
+        supplyForm: supplyFormReducer,
     }
 })
 

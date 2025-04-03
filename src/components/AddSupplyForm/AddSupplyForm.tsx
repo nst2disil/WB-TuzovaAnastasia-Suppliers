@@ -3,32 +3,106 @@ import { FC, useState } from 'react';
 import calImg from './icon-cal.svg';
 import chevronDownImg from './../../icon-chevron-down.svg';
 import { DatePicker } from 'antd';
-import CityDropDown from '../CityDropDown/CityDropDown';
 import chevronTopImg from './../../icon-chevron-top.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { createSupply, updateSupplyForm } from '../../store/suppliesSlice';
+import { RootState } from '@reduxjs/toolkit/query';
 
 interface AddSupplyFormProps {
     closeModal: () => void;
 }
 
 const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const dispatch = useDispatch();
+    const {
+        date: selectedDate,
+        city: selectedCity,
+        quantity: selectedQuantity,
+        type: selectedType,
+        warehouse: selectedWarehouse,
+        status: selectedStatus
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+    } = useSelector((state: RootState) => state.supplyForm);
 
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    const formattedStatus = selectedStatus === 'in_way' ? 'В пути' : 'Задерживается';
 
-    function toggleDropDown() {
-        setIsDropDownOpen(prevState => !prevState);
+    const handleCreateClick = () => {
+        const newSupplyData = {
+            date: selectedDate,
+            city: selectedCity,
+            quantity: selectedQuantity,
+            type: selectedType,
+            warehouse: selectedWarehouse,
+            status: selectedStatus
+        };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        dispatch(createSupply(newSupplyData));
+        closeModal();
     }
 
-    const toggleCalendar = () => {
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const [isCityDropDownOpen, setIsCityDropDownOpen] = useState(false);
+    const [isTypeDropDownOpen, setIsTypeDropDownOpen] = useState(false);
+    const [isWarehouseDropDownOpen, setIsWarehouseDropDownOpen] = useState(false);
+    const [isStatusDropDownOpen, setIsStatusDropDownOpen] = useState(false);
+
+    const cities = ['Москва', 'СПб', 'Псков', 'Тверь', 'Абакан', 'Нижний Новгород', 'Кострома', 'Ярославль'];
+    const types = ['Короб', 'Монопаллета'];
+    const warehouses = ['Склад', 'СЦ Абакан', 'Черная грязь', 'Внуково', 'Белая дача', 'Электросталь', 'Вёшки'];
+    const statuses = ['В пути', 'Задерживается'];
+
+    function toggleCalendar() {
         setIsCalendarOpen(prevState => !prevState);
     };
 
-    const handleDateChange = (_date: Date | null, dateString: string | string[]) => {
+    function toggleCityDropDown() {
+        setIsCityDropDownOpen(prevState => !prevState);
+    };
+
+    function toggleTypeDropDown() {
+        setIsTypeDropDownOpen(prevState => !prevState);
+    };
+
+    function toggleWarehouseDropDown() {
+        setIsWarehouseDropDownOpen(prevState => !prevState);
+    };
+
+    function toggleStatusDropDown() {
+        setIsStatusDropDownOpen(prevState => !prevState);
+    };
+
+    function handleDateSelect(_date: Date | null, dateString: string | string[]) {
         const dateStr = Array.isArray(dateString) ? dateString.join(', ') : dateString;
-        setSelectedDate(dateStr);
+        dispatch(updateSupplyForm({ field: 'date', value: dateStr }));
         setIsCalendarOpen(false);
     };
+
+    const handleCitySelect = (city: string) => {
+        dispatch(updateSupplyForm({ field: 'city', value: city }));
+        setIsCityDropDownOpen(false);
+    }
+
+    const handleQuantitySelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const quantity = event.target.value;
+        dispatch(updateSupplyForm({ field: 'quantity', value: quantity }));
+    };
+
+    const handleTypeSelect = (type: string) => {
+        dispatch(updateSupplyForm({ field: 'type', value: type }));
+        setIsTypeDropDownOpen(false);
+    }
+
+    const handleWarehouseSelect = (warehouse: string) => {
+        dispatch(updateSupplyForm({ field: 'warehouse', value: warehouse }));
+        setIsWarehouseDropDownOpen(false);
+    }
+
+    const handleStatusSelect = (status: string) => {
+        dispatch(updateSupplyForm({ field: 'status', value: status === 'В пути' ? 'in_way' : 'delayed' }));
+        setIsStatusDropDownOpen(false);
+    }
 
     return (
         <div className="AddSupplyForm">
@@ -57,7 +131,7 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
                     {isCalendarOpen && (
                         <div className="AddSupplyForm__data__calendar">
                             <DatePicker
-                                onChange={handleDateChange}
+                                onChange={handleDateSelect}
                                 open={true}
                                 placeholder=""
                             />
@@ -69,19 +143,39 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
                         Город
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
-                        <button onClick={toggleDropDown}>
-                            <img src={isDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                        <input
+                            type="text"
+                            value={selectedCity}
+                            readOnly
+                            onClick={toggleCityDropDown}
+                        />
+                        <button onClick={toggleCityDropDown}>
+                            <img src={isCityDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
                         </button>
                     </div>
-                    {isDropDownOpen && <CityDropDown />}
+                    {isCityDropDownOpen && (
+                        <div className="dropDown">
+                            <div className="dropDown__list">
+                                {cities.map((city, index) => (
+                                    <button key={index} onClick={() => handleCitySelect(city)}>
+                                        <span>{city}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
                         Количество
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
+                        <input
+                            type="text"
+                            placeholder="0"
+                            value={selectedQuantity}
+                            onChange={handleQuantitySelect}
+                        />
                         <span>шт.</span>
                     </div>
                 </li>
@@ -90,31 +184,85 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
                         Тип поставки
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
-                        <img src={chevronDownImg} alt="chevron" />
+                        <input
+                            type="text"
+                            value={selectedType}
+                            readOnly
+                            onClick={toggleTypeDropDown}
+                        />
+                        <button onClick={toggleTypeDropDown}>
+                            <img src={isTypeDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                        </button>
                     </div>
+                    {isTypeDropDownOpen && (
+                        <div className="dropDown">
+                            <div className="dropDown__list">
+                                {types.map((type, index) => (
+                                    <button key={index} onClick={() => handleTypeSelect(type)}>
+                                        <span>{type}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
                         Склад
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
-                        <img src={chevronDownImg} alt="chevron" />
+                        <input
+                            type="text"
+                            value={selectedWarehouse}
+                            readOnly
+                            onClick={toggleWarehouseDropDown}
+                        />
+                        <button onClick={toggleWarehouseDropDown}>
+                            <img src={isWarehouseDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                        </button>
                     </div>
+                    {isWarehouseDropDownOpen && (
+                        <div className="dropDown">
+                            <div className="dropDown__list">
+                                {warehouses.map((warehouse, index) => (
+                                    <button key={index} onClick={() => handleWarehouseSelect(warehouse)}>
+                                        <span>{warehouse}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
                         Статус
                     </span>
                     <div className="AddSupplyForm__data__input">
-                        <input />
-                        <img src={chevronDownImg} alt="chevron" />
+                        <input
+                            type="text"
+                            value={selectedStatus ? formattedStatus : ''}
+                            readOnly
+                            onClick={toggleStatusDropDown}
+                        />
+                        <button onClick={toggleStatusDropDown}>
+                            <img src={isStatusDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
+                        </button>
                     </div>
+                    {isStatusDropDownOpen && (
+                        <div className="dropDown">
+                            <div className="dropDown__list">
+                                {statuses.map((status, index) => (
+                                    <button key={index} onClick={() => handleStatusSelect(status)}>
+                                        <span>{status}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </li>
             </ul>
             <div className="AddSupplyForm__btns">
-                <button className="AddSupplyForm__btns__create">
+                <button className="AddSupplyForm__btns__create" onClick={handleCreateClick}>
                     Создать
                 </button>
                 <button className="AddSupplyForm__btns__cancel" onClick={closeModal}>

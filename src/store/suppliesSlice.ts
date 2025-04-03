@@ -61,22 +61,38 @@ export const createSupply = createAsyncThunk(
   },
 );
 
-interface suppliesState {
+interface SuppliesState {
   value: [];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
-const initialState: suppliesState = {
+const suppliesInitialState: SuppliesState = {
   value: [],
   status: 'idle',
 }
 
+interface SupplyFormState {
+  date: string;
+  city: string;
+  quantity: number | null;
+  type: string;
+  warehouse: string;
+  status: string;
+}
+
+const supplyFormInitialState: SupplyFormState = {
+  date: '',
+  city: '',
+  quantity: null,
+  type: '',
+  warehouse: '',
+  status: '',
+}
+
 export const suppliesSlice = createSlice({
   name: 'supplies',
-  initialState,
+  initialState: suppliesInitialState,
   reducers: {
-    add: () => {
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -104,5 +120,20 @@ export const suppliesSlice = createSlice({
   }
 })
 
-export const { add } = suppliesSlice.actions;
-export default suppliesSlice.reducer;
+export const supplyFormSlice = createSlice({
+  name: 'supply',
+  initialState: supplyFormInitialState,
+  reducers: {
+    updateSupplyForm: (state, action) => {
+      const { field, value } = action.payload;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      state[field] = value;
+    },
+  },
+})
+
+export const { updateSupplyForm } = supplyFormSlice.actions;
+
+export const suppliesReducer = suppliesSlice.reducer;
+export const supplyFormReducer = supplyFormSlice.reducer;
