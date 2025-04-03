@@ -22,7 +22,7 @@ const Settings = () => {
                     <img src={plusImg} alt="plus" />
                     <span>Добавить поставку</span>
                 </button>
-                {isAddButtonPressed && <ModalWindow closeModal={toggleAddSupplyButton} formType="add" />}
+                {isAddButtonPressed && <ModalWindow closeModal={toggleAddSupplyButton} formType="add" supplyId='' />}
                 <Search />
             </div>
         </div>

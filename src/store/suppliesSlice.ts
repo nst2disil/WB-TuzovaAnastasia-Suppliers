@@ -73,11 +73,15 @@ export const createSupply = createAsyncThunk(
 interface SuppliesState {
   value: [];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  filter: {searchVal?: string};
+  filtered: [];
 }
 
 const suppliesInitialState: SuppliesState = {
   value: [],
   status: 'idle',
+  filter: {},
+  filtered: [],
 }
 
 interface SupplyFormState {
@@ -102,11 +106,21 @@ export const suppliesSlice = createSlice({
   name: 'supplies',
   initialState: suppliesInitialState,
   reducers: {
+    filterSupplies: (state) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      state.filtered = state.value.filter(supply => supply.type === state.filter.searchVal);
+      console.log('фильтр по', state.filter.searchVal)
+    },
+    updateSearchVal: (state, action) => {
+      state.filter.searchVal = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSupplies.fulfilled, (state, action) => {
         state.value = action.payload;
+        state.filtered = action.payload;
       })
       .addCase(cancelSupply.fulfilled, (state, action) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -162,6 +176,7 @@ export const supplyFormSlice = createSlice({
   },
 })
 
+export const { filterSupplies, updateSearchVal } = suppliesSlice.actions;
 export const { updateSupplyForm } = supplyFormSlice.actions;
 
 export const suppliesReducer = suppliesSlice.reducer;

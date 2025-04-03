@@ -6,7 +6,7 @@ import EditSupplyForm from '../EditSupplyForm/EditSupplyForm';
 interface ModalWindowProps {
     closeModal: () => void,
     formType: string,
-    supplyId: string
+    supplyId: string | ''
 }
 
 const ModalWindow: FC<ModalWindowProps> = ({ closeModal, formType, supplyId }) => {

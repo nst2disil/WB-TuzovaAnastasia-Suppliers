@@ -22,26 +22,7 @@ function App() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  const supplies = useSelector((state) => state.supplies.value);
-
-
-  // useEffect(() => {
-  //   const supplyData = {
-  //     "id": "26589",
-  //     "date": "24.06.2024",
-  //     "city": "обновлёнyyy",
-  //     "quantity": 30,
-  //     "type": "Короб",
-  //     "warehouse": {
-  //       "name": "СЦ Абакан",
-  //       "address": "ул. Игарская, д. 21г"
-  //     },
-  //     "status": "Задерживается"
-  //   }
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-expect-error
-  //   dispatch(updateSupply(supplyData));
-  // }, [dispatch]);
+  const filteredSupplies = useSelector((state) => state.supplies.filtered);
 
 
   return (
@@ -50,7 +31,7 @@ function App() {
       <div className="container">
         <HeaderNav />
         <Settings />
-        <SuppliesTable headers={headers} rowsData={supplies} />
+        <SuppliesTable headers={headers} rowsData={filteredSupplies} />
       </div>
     </div>
   )
