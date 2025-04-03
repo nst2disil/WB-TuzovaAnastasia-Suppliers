@@ -14,7 +14,7 @@ interface SuppliesTableProps {
             "name": string,
             "address": string
         },
-        "status": boolean
+        "status": string
     }>;
 }
 

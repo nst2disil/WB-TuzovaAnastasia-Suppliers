@@ -11,6 +11,15 @@ export const fetchSupplies = createAsyncThunk(
   },
 );
 
+export const fetchSupplyById = createAsyncThunk(
+  'supply/fetchById',
+  async (supplyId) => {
+    const response = await fetch(`${endpoint}/${supplyId}`);
+    const data = await response.json();
+    return data;
+  }
+);
+
 export const cancelSupply = createAsyncThunk(
   'supplies/cancelSupply',
   async (supplyId) => {
@@ -76,7 +85,7 @@ interface SupplyFormState {
   city: string;
   quantity: number | null;
   type: string;
-  warehouse: string;
+  warehouse: { name: string, address: string };
   status: string;
 }
 
@@ -85,7 +94,7 @@ const supplyFormInitialState: SupplyFormState = {
   city: '',
   quantity: null,
   type: '',
-  warehouse: '',
+  warehouse: { name: '', address: '' },
   status: '',
 }
 
@@ -126,10 +135,30 @@ export const supplyFormSlice = createSlice({
   reducers: {
     updateSupplyForm: (state, action) => {
       const { field, value } = action.payload;
+      if (field === 'warehouse') {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        state[field] = { name: value.name, address: value.address }
+      }
+      else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        state[field] = value;
+      }
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchSupplyById.fulfilled, (state, action) => {
+      const { id, city, quantity, type, warehouse, status } = action.payload;
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      state[field] = value;
-    },
+      state.id = id;
+      state.city = city || '';
+      state.quantity = quantity || null;
+      state.type = type || '';
+      state.warehouse = warehouse || { name: '', address: '' };
+      state.status = status || '';
+    });
   },
 })
 

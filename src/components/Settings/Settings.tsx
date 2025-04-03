@@ -7,7 +7,7 @@ import ModalWindow from '../ModalWindow/ModalWindow';
 const Settings = () => {
     const [isAddButtonPressed, setIsEditButtonPressed] = useState(false);
 
-    function toggleEditButton() {
+    function toggleAddSupplyButton() {
         setIsEditButtonPressed(prevState => !prevState);
     }
 
@@ -17,12 +17,12 @@ const Settings = () => {
             <div className="settings__actions">
                 <button
                     className={`settings__actions__add ${isAddButtonPressed ? 'settings__actions__add_pressed' : ''}`}
-                    onClick={toggleEditButton}
+                    onClick={toggleAddSupplyButton}
                 >
                     <img src={plusImg} alt="plus" />
                     <span>Добавить поставку</span>
                 </button>
-                {isAddButtonPressed && <ModalWindow closeModal={toggleEditButton} />}
+                {isAddButtonPressed && <ModalWindow closeModal={toggleAddSupplyButton} formType="add" />}
                 <Search />
             </div>
         </div>

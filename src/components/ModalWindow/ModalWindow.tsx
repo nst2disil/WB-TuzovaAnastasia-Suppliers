@@ -2,11 +2,14 @@ import { FC } from 'react';
 import './modalWindow.css';
 import CloseImg from './icon-close.svg';
 import AddSupplyForm from '../AddSupplyForm/AddSupplyForm';
+import EditSupplyForm from '../EditSupplyForm/EditSupplyForm';
 interface ModalWindowProps {
-    closeModal: () => void;
+    closeModal: () => void,
+    formType: string,
+    supplyId: string
 }
 
-const ModalWindow: FC<ModalWindowProps> = ({ closeModal }) => {
+const ModalWindow: FC<ModalWindowProps> = ({ closeModal, formType, supplyId }) => {
     return (
         <div className="overlay">
             <div className="ModalWindow">
@@ -14,7 +17,10 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModal }) => {
                     <img src={CloseImg} alt="close" />
                 </button>
                 <div className="ModalWindow__content">
-                    <AddSupplyForm closeModal={closeModal} />
+                    {formType === 'add'
+                        ? <AddSupplyForm closeModal={closeModal} />
+                        : <EditSupplyForm closeModal={closeModal} supplyId={supplyId} />
+                    }
                 </div>
             </div>
         </div>

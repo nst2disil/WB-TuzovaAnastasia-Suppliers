@@ -1,23 +1,27 @@
-import './addSupplyForm.css';
-import { FC, useState } from 'react';
-import calImg from './icon-cal.svg';
+import './editSupplyForm.css';
+import { FC, useState, useEffect } from 'react';
 import chevronDownImg from './../../icon-chevron-down.svg';
-import { DatePicker } from 'antd';
 import chevronTopImg from './../../icon-chevron-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSupply, updateSupplyForm } from '../../store/suppliesSlice';
+import { updateSupplyForm, fetchSupplyById, updateSupply } from '../../store/suppliesSlice';
 import { RootState } from '@reduxjs/toolkit/query';
-import moment from 'moment';
 
-interface AddSupplyFormProps {
-    closeModal: () => void;
+interface EditSupplyFormProps {
+    closeModal: () => void,
+    supplyId: string
 }
 
-const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
+const EditSupplyForm: FC<EditSupplyFormProps> = ({ closeModal, supplyId }) => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        dispatch(fetchSupplyById(supplyId));
+    }, [dispatch, supplyId]);
+
     const {
         id: selectedId,
-        date: selectedDate,
         city: selectedCity,
         quantity: selectedQuantity,
         type: selectedType,
@@ -27,12 +31,10 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
         // @ts-expect-error
     } = useSelector((state: RootState) => state.supplyForm);
 
-    const formattedStatus = selectedStatus === 'in_way' ? 'В пути' : 'Задерживается';
 
     const handleCreateClick = () => {
         const newSupplyData = {
             id: selectedId,
-            date: selectedDate,
             city: selectedCity,
             quantity: selectedQuantity,
             type: selectedType,
@@ -41,11 +43,12 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
         };
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        dispatch(createSupply(newSupplyData));
+        dispatch(updateSupply(newSupplyData));
         closeModal();
     }
 
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const formattedStatus = selectedStatus === 'in_way' ? 'В пути' : 'Задерживается';
+
     const [isCityDropDownOpen, setIsCityDropDownOpen] = useState(false);
     const [isTypeDropDownOpen, setIsTypeDropDownOpen] = useState(false);
     const [isWarehouseDropDownOpen, setIsWarehouseDropDownOpen] = useState(false);
@@ -64,11 +67,6 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
         { name: 'Вёшки', address: 'Липкинское шоссе, 2-й километр, вл1с1, посёлок Вёшки, городской округ Мытищи, Московская область' }
     ];
 
-
-    function toggleCalendar() {
-        setIsCalendarOpen(prevState => !prevState);
-    };
-
     function toggleCityDropDown() {
         setIsCityDropDownOpen(prevState => !prevState);
     };
@@ -83,13 +81,6 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
 
     function toggleStatusDropDown() {
         setIsStatusDropDownOpen(prevState => !prevState);
-    };
-
-    function handleDateSelect(_date: moment.Moment | null, dateString: string | string[]) {
-        const dateStr = Array.isArray(dateString) ? dateString.join(', ') : dateString;
-        const formattedDate = moment(dateStr, 'YYYY-MM-DD').format('DD.MM.YYYY');
-        dispatch(updateSupplyForm({ field: 'date', value: formattedDate }));
-        setIsCalendarOpen(false);
     };
 
     const handleCitySelect = (city: string) => {
@@ -120,37 +111,10 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
     return (
         <div className="AddSupplyForm">
             <div>
-                <div className="AddSupplyForm__title">Новая поставка</div>
+                <div className="AddSupplyForm__title">Редактирование</div>
                 <div className="AddSupplyForm__id">#{selectedId}</div>
             </div>
             <ul className="AddSupplyForm__data">
-                <li>
-                    <span className="AddSupplyForm__data__title">
-                        Дата поставки
-                    </span>
-                    <div className="AddSupplyForm__data__input">
-                        <input
-                            type="text"
-                            value={selectedDate || ''}
-                            readOnly
-                            placeholder="__.__.____"
-                        />
-                        <img
-                            src={calImg}
-                            alt="cal"
-                            onClick={toggleCalendar}
-                        />
-                    </div>
-                    {isCalendarOpen && (
-                        <div className="AddSupplyForm__data__calendar">
-                            <DatePicker
-                                onChange={handleDateSelect}
-                                open={true}
-                                placeholder=""
-                            />
-                        </div>
-                    )}
-                </li>
                 <li>
                     <span className="AddSupplyForm__data__title">
                         Город
@@ -158,7 +122,7 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
                     <div className="AddSupplyForm__data__input">
                         <input
                             type="text"
-                            value={selectedCity || ''}
+                            value={selectedCity}
                             readOnly
                             onClick={toggleCityDropDown}
                         />
@@ -276,7 +240,7 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
             </ul>
             <div className="AddSupplyForm__btns">
                 <button className="AddSupplyForm__btns__create" onClick={handleCreateClick}>
-                    Создать
+                    Сохранить
                 </button>
                 <button className="AddSupplyForm__btns__cancel" onClick={closeModal}>
                     Отменить
@@ -288,4 +252,4 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
     );
 }
 
-export default AddSupplyForm;
+export default EditSupplyForm;
