@@ -48,6 +48,10 @@
     opacity: 0.4;
 }
 
+.AddSupplyForm__data li {
+    position: relative;
+}
+
 .AddSupplyForm__data__title {
     font-size: 13px;
     line-height: 16px;
@@ -65,4 +69,9 @@
 .AddSupplyForm__data__calendar {
     display: flex;
     justify-content: right;
+}
+
+.AddSupplyForm .dropDown {
+    left: 0;
+    top: 100%;
 }

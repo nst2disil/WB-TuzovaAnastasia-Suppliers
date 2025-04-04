@@ -259,18 +259,18 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
                         <button onClick={toggleStatusDropDown}>
                             <img src={isStatusDropDownOpen ? chevronTopImg : chevronDownImg} alt="chevron" />
                         </button>
-                    </div>
-                    {isStatusDropDownOpen && (
-                        <div className="dropDown">
-                            <div className="dropDown__list">
-                                {statuses.map((status, index) => (
-                                    <button key={index} onClick={() => handleStatusSelect(status)}>
-                                        <span>{status}</span>
-                                    </button>
-                                ))}
+                        {isStatusDropDownOpen && (
+                            <div className="dropDown">
+                                <div className="dropDown__list">
+                                    {statuses.map((status, index) => (
+                                        <button key={index} onClick={() => handleStatusSelect(status)}>
+                                            <span>{status}</span>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </li>
             </ul>
             <div className="AddSupplyForm__btns">

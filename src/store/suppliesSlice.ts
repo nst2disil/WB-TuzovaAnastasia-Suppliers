@@ -112,18 +112,7 @@ export const suppliesSlice = createSlice({
   reducers: {
     updateFilter: (state, action) => {
       state.filter = action.payload;
-
-      // const { key, searchVal } = action.payload;
-      // state.filter.key = key.key;
-      // state.filter.searchVal = searchVal.searchVal;
       console.log(state.filter)
-
-      // if (key === 'searchVal') {
-      //   state.filter.searchVal = searchVal;
-      // } else if (key === 'filterKey') {
-      //   state.filter.key = { key: searchVal, label: state.filter.key.label };
-      // }
-      // console.log(state.filter)
     },
 
     updateSearchVal: (state, action) => {

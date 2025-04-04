@@ -12,7 +12,7 @@
     --dark-gray: #2D2C32;
     --gray: #FFFFFF14;
     --light-gray: #FFFFFF3D;
-    --light2-gray:#767386;
+    --light2-gray: #767386;
     --green: #14532B;
     --light-green: #85EF89;
     --orange: #7C3D12;
@@ -36,16 +36,14 @@ body {
 }
 
 .container {
-    padding: 24px; 
+    padding: 24px;
     width: 100%;
 }
 
 .dropDown {
     padding-top: 4px;
     position: absolute;
-    /* right: 0; */
-    top: 40px; 
-    left: 0;
+    top: 40px;
     min-width: 192px;
     z-index: 1000;
 }
