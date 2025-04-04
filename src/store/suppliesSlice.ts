@@ -78,7 +78,6 @@ interface SuppliesState {
     searchVal?: string,
     key: { key: string, label: string }
   };
-  filtered: [];
 }
 
 const suppliesInitialState: SuppliesState = {
@@ -87,7 +86,6 @@ const suppliesInitialState: SuppliesState = {
   filter: {
     key: { key: 'number', label: 'По номеру' }
   },
-  filtered: [],
 }
 
 interface SupplyFormState {
@@ -112,11 +110,22 @@ export const suppliesSlice = createSlice({
   name: 'supplies',
   initialState: suppliesInitialState,
   reducers: {
-    filterSupplies: (state) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      state.filtered = state.value.filter(supply => supply[state.filter.key.key] === state.filter.searchVal);
+    updateFilter: (state, action) => {
+      state.filter = action.payload;
+
+      // const { key, searchVal } = action.payload;
+      // state.filter.key = key.key;
+      // state.filter.searchVal = searchVal.searchVal;
+      console.log(state.filter)
+
+      // if (key === 'searchVal') {
+      //   state.filter.searchVal = searchVal;
+      // } else if (key === 'filterKey') {
+      //   state.filter.key = { key: searchVal, label: state.filter.key.label };
+      // }
+      // console.log(state.filter)
     },
+
     updateSearchVal: (state, action) => {
       state.filter.searchVal = action.payload;
     },
@@ -128,7 +137,6 @@ export const suppliesSlice = createSlice({
     builder
       .addCase(fetchSupplies.fulfilled, (state, action) => {
         state.value = action.payload;
-        state.filtered = action.payload;
       })
       .addCase(cancelSupply.fulfilled, (state, action) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -184,7 +192,7 @@ export const supplyFormSlice = createSlice({
   },
 })
 
-export const { filterSupplies, updateSearchVal, updateFilterKey } = suppliesSlice.actions;
+export const { updateFilter } = suppliesSlice.actions;
 export const { updateSupplyForm } = supplyFormSlice.actions;
 
 export const suppliesReducer = suppliesSlice.reducer;

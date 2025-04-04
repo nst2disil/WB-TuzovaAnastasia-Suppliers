@@ -4,16 +4,19 @@ import chevronDownImg from './../../icon-chevron-down.svg';
 import chevronTopImg from './../../icon-chevron-top.svg';
 import searchImg from './icon-search.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterSupplies, updateSearchVal, updateFilterKey } from './../../store/suppliesSlice';
+import { updateFilter } from './../../store/suppliesSlice';
 
 const Search = () => {
     const dispatch = useDispatch()
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    const { searchVal, key } = useSelector(state => state.supplies.filter);
-
-    // const supplies = useSelector(state => state.supplies.value);
+    const filter = useSelector((state) => state.supplies.filter)
+    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    // FIXME: for UI optimization
+    const [filterKey, setFilterKey] = useState(filter.key.key);
+    const [filterVal, setFilterVal] = useState(filter.searchVal);
+    // FIXME: refactor
+    const [filterLabel, setFilterLabel] = useState(filter.key.label);
 
     const filters = [
         { key: 'number', label: 'По номеру' },
@@ -22,23 +25,23 @@ const Search = () => {
         { key: 'status', label: 'По статусу' },
     ]
 
-
     function toggleDropDown() {
         setIsDropDownOpen(prevState => !prevState);
     }
 
     function searchClick() {
-        dispatch(filterSupplies());
+        dispatch(updateFilter({ key: filterKey, searchVal: filterVal }));
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     function handleSearchChange(event) {
-        dispatch(updateSearchVal(event.target.value))
+        setFilterVal(event.target.value);
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     function handleFilterSelect(filter) {
-        dispatch(updateFilterKey(filter));
+        setFilterKey(filter.key);
+        setFilterLabel(filter.label);
         setIsDropDownOpen(false);
     }
 
@@ -49,8 +52,7 @@ const Search = () => {
                     className={`search__filter ${isDropDownOpen ? 'search__filter_active' : ''}`}
                     onClick={toggleDropDown}
                 >
-
-                    <span>{key.label}</span>
+                    <span>{filterLabel}</span>
                     <img
                         src={isDropDownOpen ? chevronTopImg : chevronDownImg}
                         alt="chevron"
@@ -59,7 +61,7 @@ const Search = () => {
                 <input
                     className="search__input"
                     placeholder="Поиск..."
-                    value={searchVal}
+                    value={filterVal}
                     onChange={handleSearchChange}
                 />
                 <button className="search__button" onClick={searchClick}>

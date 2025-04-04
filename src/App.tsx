@@ -22,7 +22,19 @@ function App() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  const filteredSupplies = useSelector((state) => state.supplies.filtered);
+  // const supplies = useSelector((state) => state.supplies.value);
+
+  const filter = useSelector((state) => state.supplies.filter);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const supplies = useSelector((state) => state.supplies.value.filter((item) => {
+
+    if (filter.searchVal) {
+      // debugger
+      return item[filter.key].includes(filter.searchVal)
+    }
+    return true;
+  }))
 
 
   return (
@@ -31,7 +43,7 @@ function App() {
       <div className="container">
         <HeaderNav />
         <Settings />
-        <SuppliesTable headers={headers} rowsData={filteredSupplies} />
+        <SuppliesTable headers={headers} rowsData={supplies} />
       </div>
     </div>
   )
