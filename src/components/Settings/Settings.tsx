@@ -3,11 +3,15 @@ import './settings.css';
 import plusImg from './icon-plus.svg';
 import Search from '../Search/Search';
 import ModalWindow from '../ModalWindow/ModalWindow';
+import { useDispatch } from 'react-redux';
+import { resetSupplyForm } from '../../store/suppliesSlice';
 
 const Settings = () => {
     const [isAddButtonPressed, setIsEditButtonPressed] = useState(false);
+    const dispatch = useDispatch();
 
     function toggleAddSupplyButton() {
+        dispatch(resetSupplyForm());
         setIsEditButtonPressed(prevState => !prevState);
     }
 

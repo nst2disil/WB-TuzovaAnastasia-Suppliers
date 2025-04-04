@@ -143,7 +143,7 @@ export const suppliesSlice = createSlice({
       .addCase(createSupply.fulfilled, (state, action) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        state.value.push(action.payload);
+        state.value.unshift(action.payload);
       })
   }
 })
@@ -165,6 +165,9 @@ export const supplyFormSlice = createSlice({
         state[field] = value;
       }
     },
+    resetSupplyForm: () => {
+      return supplyFormInitialState;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSupplyById.fulfilled, (state, action) => {
@@ -182,7 +185,7 @@ export const supplyFormSlice = createSlice({
 })
 
 export const { updateFilter } = suppliesSlice.actions;
-export const { updateSupplyForm } = supplyFormSlice.actions;
+export const { updateSupplyForm, resetSupplyForm } = supplyFormSlice.actions;
 
 export const suppliesReducer = suppliesSlice.reducer;
 export const supplyFormReducer = supplyFormSlice.reducer;
