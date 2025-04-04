@@ -36,6 +36,7 @@ function App() {
     if (filter.searchVal) {
       let itemVal = String(item[filter.key])
       const searchVal = String(filter.searchVal)
+      // debugger
 
       if (filter.key === 'status') {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -48,8 +49,6 @@ function App() {
     }
     return true;
   }))
-
-
 
 
   return (

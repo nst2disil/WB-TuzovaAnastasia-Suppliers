@@ -23,16 +23,16 @@ const SuppliesTable: FC<SuppliesTableProps> = ({ headers, rowsData }) => {
         <table className="suppliesTable">
             <thead>
                 <tr className="suppliesTable__header">
-                    {headers.map((val, index) => (
-                        <th key={index}>
+                    {headers.map((val) => (
+                        <th key={val}>
                             <div>{val}</div>
                         </th>
                     ))}
                 </tr>
             </thead>
             <tbody>
-                {rowsData.map((rowData, index) => (
-                    <Supply key={index} rowData={rowData} />
+                {rowsData.map((rowData) => (
+                    <Supply key={rowData.id} rowData={rowData} />
                 ))}
             </tbody>
         </table>

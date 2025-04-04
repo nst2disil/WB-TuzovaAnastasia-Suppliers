@@ -19,7 +19,7 @@ const Search = () => {
     const [filterLabel, setFilterLabel] = useState(filter.key.label);
 
     const filters = [
-        { key: 'number', label: 'По номеру' },
+        { key: 'id', label: 'По номеру' },
         { key: 'city', label: 'По городу' },
         { key: 'type', label: 'По типу поставки' },
         { key: 'status', label: 'По статусу' },

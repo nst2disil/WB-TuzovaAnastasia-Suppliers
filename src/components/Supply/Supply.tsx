@@ -21,7 +21,7 @@ interface SupplyProps {
 const Supply: FC<SupplyProps> = ({ rowData }) => {
     const [isEditButtonPressed, setIsEditButtonPressed] = useState(false);
 
-    function ToggleEdit() {
+    function toggleEdit() {
         setIsEditButtonPressed(prevState => !prevState);
     }
 
@@ -57,7 +57,7 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
             <td>
                 <button
                     className={`supply__edit-btn ${isEditButtonPressed ? 'supply__edit-btn_pressed' : ''}`}
-                    onClick={ToggleEdit}
+                    onClick={toggleEdit}
                 >
                     <img src={kebabImg} alt="kebab" />
                 </button>

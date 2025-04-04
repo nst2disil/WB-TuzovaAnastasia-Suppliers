@@ -16,7 +16,7 @@ interface EditDropDownProps {
             "address": string
         },
         "status": string
-    };
+    }
 }
 
 const EditDropDown: FC<EditDropDownProps> = ({ supplyData }) => {

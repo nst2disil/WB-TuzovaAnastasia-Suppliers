@@ -84,7 +84,7 @@ const suppliesInitialState: SuppliesState = {
   value: [],
   status: 'idle',
   filter: {
-    key: { key: 'number', label: 'По номеру' }
+    key: { key: 'id', label: 'По номеру' }
   },
 }
 
