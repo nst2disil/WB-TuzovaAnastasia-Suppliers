@@ -22,19 +22,34 @@ function App() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  // const supplies = useSelector((state) => state.supplies.value);
-
   const filter = useSelector((state) => state.supplies.filter);
+
+  const STATUS_MAP = {
+    in_way: "В пути",
+    delayed: "Задерживается",
+  }
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   const supplies = useSelector((state) => state.supplies.value.filter((item) => {
 
     if (filter.searchVal) {
+      let itemVal = String(item[filter.key])
+      const searchVal = String(filter.searchVal)
+
+      if (filter.key === 'status') {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        itemVal = STATUS_MAP[itemVal]
+      }
       // debugger
-      return item[filter.key].includes(filter.searchVal)
+
+      return itemVal.includes(searchVal)
     }
     return true;
   }))
+
+
 
 
   return (
