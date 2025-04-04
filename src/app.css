@@ -43,6 +43,9 @@ body {
 .dropDown {
     padding-top: 4px;
     position: absolute;
+    /* right: 0; */
+    top: 40px; 
+    left: 0;
     min-width: 192px;
     z-index: 1000;
 }

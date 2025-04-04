@@ -1,5 +1,5 @@
 .ModalWindow {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -21,4 +21,14 @@
 
 .ModalWindow__content {
     padding: 0px 48px 32px 48px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--overlay-black);
+    z-index: 10;
 }

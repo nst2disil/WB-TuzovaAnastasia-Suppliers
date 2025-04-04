@@ -5,7 +5,7 @@
     gap: 4px;
     background: var(--gray);
     border-radius: 14px;
-    /* position: relative; */
+    position: relative;
 }
 
 .search:hover {

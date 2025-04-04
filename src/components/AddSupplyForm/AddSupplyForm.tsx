@@ -99,7 +99,7 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
 
     const handleQuantitySelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const quantity = event.target.value;
-        dispatch(updateSupplyForm({ field: 'quantity', value: quantity }));
+        dispatch(updateSupplyForm({ field: 'quantity', value: Number(quantity) }));
     };
 
     const handleTypeSelect = (type: string) => {
@@ -121,7 +121,6 @@ const AddSupplyForm: FC<AddSupplyFormProps> = ({ closeModal }) => {
         <div className="AddSupplyForm">
             <div>
                 <div className="AddSupplyForm__title">Новая поставка</div>
-                <div className="AddSupplyForm__id">#{selectedId}</div>
             </div>
             <ul className="AddSupplyForm__data">
                 <li>

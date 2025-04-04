@@ -63,10 +63,10 @@ const Supply: FC<SupplyProps> = ({ rowData }) => {
                         <img src={kebabImg} alt="kebab" />
                     </button>
                 </td>
+                {isEditButtonPressed && (
+                    <EditDropDown supplyData={rowData} />
+                )}
             </tr>
-            {isEditButtonPressed && (
-                <EditDropDown supplyData={rowData} />
-            )}
         </>
     );
 }

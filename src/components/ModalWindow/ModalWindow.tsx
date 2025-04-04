@@ -11,7 +11,8 @@ interface ModalWindowProps {
 
 const ModalWindow: FC<ModalWindowProps> = ({ closeModal, formType, supplyId }) => {
     return (
-        <div className="overlay">
+        <>
+            <div className="overlay"></div>
             <div className="ModalWindow">
                 <button className="ModalWindow__close" onClick={closeModal}>
                     <img src={CloseImg} alt="close" />
@@ -23,7 +24,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModal, formType, supplyId }) =
                     }
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -1,6 +1,7 @@
 .supply {
     background-color: var(--light-gray);
     line-height: 20px;
+    position: relative;
 }
 
 .supply td {

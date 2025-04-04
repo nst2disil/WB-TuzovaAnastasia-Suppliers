@@ -70,17 +70,23 @@ export const createSupply = createAsyncThunk(
   },
 );
 
+// FIXME: types!!
 interface SuppliesState {
   value: [];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  filter: {searchVal?: string};
+  filter: {
+    searchVal?: string,
+    key: { key: string, label: string }
+  };
   filtered: [];
 }
 
 const suppliesInitialState: SuppliesState = {
   value: [],
   status: 'idle',
-  filter: {},
+  filter: {
+    key: { key: 'number', label: 'По номеру' }
+  },
   filtered: [],
 }
 
@@ -109,11 +115,13 @@ export const suppliesSlice = createSlice({
     filterSupplies: (state) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
-      state.filtered = state.value.filter(supply => supply.type === state.filter.searchVal);
-      console.log('фильтр по', state.filter.searchVal)
+      state.filtered = state.value.filter(supply => supply[state.filter.key.key] === state.filter.searchVal);
     },
     updateSearchVal: (state, action) => {
       state.filter.searchVal = action.payload;
+    },
+    updateFilterKey: (state, action) => {
+      state.filter.key = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -176,7 +184,7 @@ export const supplyFormSlice = createSlice({
   },
 })
 
-export const { filterSupplies, updateSearchVal } = suppliesSlice.actions;
+export const { filterSupplies, updateSearchVal, updateFilterKey } = suppliesSlice.actions;
 export const { updateSupplyForm } = supplyFormSlice.actions;
 
 export const suppliesReducer = suppliesSlice.reducer;
